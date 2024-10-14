@@ -1,0 +1,25 @@
+{
+    "name": "admin/phpsyntax",
+    "authors": [
+        {
+            "name": "mukabwakevin",
+            "email": "mukabwakevin825@gmail.com"
+        }
+    ],
+    "require": {
+        "illuminate/collections": "^11.27"
+    },
+    "autoload": {
+        "psr-4": {
+            "Core\\": "Core/"
+        }
+    },
+    "require-dev": {
+        "pestphp/pest": "^3.3"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}

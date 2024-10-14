@@ -1,12 +1,32 @@
 <?php
 
-const BASE_DIR = __DIR__ . "/../";
+use Core\Session;
+use Core\ValidationException;
 
-require BASE_DIR . 'functions.php';
+const BASE_PATH = __DIR__.'/../';
 
-require base_path ('Database.php');
-require base_path ('response.php');
-require base_path ('router.php');
+require BASE_PATH . '/vendor/autoload.php';
 
-// connect to the database and execute the query
+SESSION_START();
 
+require BASE_PATH.'Core/functions.php';
+
+require base_path('bootstrap.php');
+
+$router = new \Core\Router();
+$routes = require base_path('routes.php');
+
+$uri = parse_url($_SERVER['REQUEST_URI'])['path'];
+$method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
+try {
+    $router->route($uri, $method);
+}
+catch (ValidationException $exception)
+{
+    Session::flash('errors', $exception->errors);
+    Session::flash('old', $attribute->old);
+
+    return redirect($router->previousUrl());
+}
+
+Session::unflash();
